@@ -10,7 +10,7 @@ public class Movimiento : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camera = transform.Find("Main Camera");
+        camera = transform.Find("Camera");
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -24,13 +24,14 @@ public class Movimiento : MonoBehaviour
             transform.Rotate(Vector3.up * hor * sensivility.x);
 
         }
+
         if (ver != 0)
         {
-            //transform.Rotate(Vector3.left * ver * sensivility.y);
-            float angle = (camera.localEulerAngles.x - ver * sensivility.y) % 360;
+            float angle = (camera.localEulerAngles.x - ver * sensivility.y + 360    ) % 360;
             if (angle > 180) { angle -= 360; }
-            angle = Mathf.Clamp(angle, -80, +80);
+            angle = Mathf.Clamp(angle, -80,80);
             camera.localEulerAngles=Vector3.right * angle;
         }
+
     }
 }

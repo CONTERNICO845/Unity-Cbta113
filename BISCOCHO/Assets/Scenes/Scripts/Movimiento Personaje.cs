@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class MovimientoPersonaje : MonoBehaviour
 {
+    public float correr = 9f;
     public CharacterController controlador;
-    public float velocidad = 15f;
-    public float gravedad = -10f;
+    public float velocidad = 6f;
+    public float gravedad = -20f;
     public Transform patas;
     public float DistanciaDelSuelo;
     public LayerMask MascaraDelPiso;
     Vector3 velocidadAbajo;
     bool EstaEnPiso;
     public float saltos = 2f;
-    public float tiempoRecargaSalto = 2f; // Tiempo de recarga entre saltos
+    public float tiempoRecargaSalto = 1f; 
     private float tiempoUltimoSalto;
 
     void Start()
@@ -46,5 +47,11 @@ public class MovimientoPersonaje : MonoBehaviour
         velocidadAbajo.y += gravedad * Time.deltaTime;
 
         controlador.Move(move * velocidad * Time.deltaTime + velocidadAbajo * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            controlador.Move(move * correr * Time.deltaTime);
+        }
+
     }
 }

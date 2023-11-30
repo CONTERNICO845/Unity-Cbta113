@@ -12,6 +12,8 @@ public class MovimientoPersonaje : MonoBehaviour
     public float DistanciaDelSuelo;
     public LayerMask MascaraDelPiso;
     public AudioSource pasos;
+    private bool Hactivo;
+    private bool Vactivo;
     Vector3 velocidadAbajo;
     bool EstaEnPiso;
     public float saltos = 2f;
@@ -55,11 +57,32 @@ public class MovimientoPersonaje : MonoBehaviour
         }
         if (Input.GetButtonDown("Horizontal"))
         {
-            pasos.Play();
+            Hactivo = true;
+            
+                pasos.Play();
+            
+            
         }
         if (Input.GetButtonDown("Vertical"))
         {
+            Vactivo = true;
             pasos.Play();
+        }
+        if (Input.GetButtonUp("Horizontal"))
+        {
+            Hactivo = false;
+            if (Vactivo == false) { 
+            pasos.Pause();
+        }
+    }
+        if (Input.GetButtonUp("Vertical"))
+        {
+            Vactivo=false;
+            if(Hactivo== false)
+            {
+                pasos.Pause();
+            }
+          
         }
     }
 }

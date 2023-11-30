@@ -4,26 +4,21 @@ using UnityEngine;
 
 public class Linterna : MonoBehaviour
 {
-
     Light linterna;
 
-    // Start is called before the first frame update
     void Start()
     {
-gameObject.SetActive(false);
-        
+        // Obtener la referencia al componente Light
+        linterna = GetComponent<Light>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-
-        if (Input.GetKeyDown(KeyCode.F)) {
-
-            gameObject.SetActive(!gameObject.activeSelf);
+        // Cambiar el estado de la linterna al presionar la tecla "L"
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            linterna.enabled = !linterna.enabled; // Cambiar el estado de encendido/apagado
         }
-
-
     }
 }
+

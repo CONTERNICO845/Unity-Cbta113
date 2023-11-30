@@ -11,6 +11,7 @@ public class MovimientoPersonaje : MonoBehaviour
     public Transform patas;
     public float DistanciaDelSuelo;
     public LayerMask MascaraDelPiso;
+    public AudioSource pasos;
     Vector3 velocidadAbajo;
     bool EstaEnPiso;
     public float saltos = 2f;
@@ -52,6 +53,13 @@ public class MovimientoPersonaje : MonoBehaviour
         {
             controlador.Move(move * correr * Time.deltaTime);
         }
-
+        if (Input.GetButtonDown("Horizontal"))
+        {
+            pasos.Play();
+        }
+        if (Input.GetButtonDown("Vertical"))
+        {
+            pasos.Play();
+        }
     }
 }

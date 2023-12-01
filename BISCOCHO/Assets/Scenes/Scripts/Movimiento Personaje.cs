@@ -43,7 +43,7 @@ public class MovimientoPersonaje : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && EstaEnPiso && (Time.time - tiempoUltimoSalto > tiempoRecargaSalto))
         {
-            velocidadAbajo.y = Mathf.Sqrt(saltos * -2 * gravedad);
+            velocidadAbajo.y = Mathf.Sqrt(saltos * -1 * gravedad);
             tiempoUltimoSalto = Time.time;
         }
 

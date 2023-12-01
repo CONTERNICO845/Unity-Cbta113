@@ -14,10 +14,12 @@ public class MovimientoPersonaje : MonoBehaviour
     public AudioSource pasos;
     private bool Hactivo;
     private bool Vactivo;
+    public AudioSource corrersound;
+    public AudioSource sonidosalto;
     Vector3 velocidadAbajo;
     bool EstaEnPiso;
     public float saltos = 2f;
-    public float tiempoRecargaSalto = 1f; 
+    public float tiempoRecargaSalto = 1f;
     private float tiempoUltimoSalto;
 
     void Start()
@@ -30,7 +32,7 @@ public class MovimientoPersonaje : MonoBehaviour
     {
         EstaEnPiso = Physics.CheckSphere(patas.position, DistanciaDelSuelo, MascaraDelPiso);
 
-        if (EstaEnPiso && velocidadAbajo.y < 0)
+        if (EstaEnPiso && velocidadAbajo.y <= 0)
         {
             velocidadAbajo.y = -2;
         }
@@ -43,6 +45,10 @@ public class MovimientoPersonaje : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && EstaEnPiso && (Time.time - tiempoUltimoSalto > tiempoRecargaSalto))
         {
+            if(sonidosalto != null && !sonidosalto.isPlaying)
+            {
+                sonidosalto.Play();
+            }
             velocidadAbajo.y = Mathf.Sqrt(saltos * -2 * gravedad);
             tiempoUltimoSalto = Time.time;
         }
@@ -53,36 +59,45 @@ public class MovimientoPersonaje : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
+
             controlador.Move(move * correr * Time.deltaTime);
+
         }
         if (Input.GetButtonDown("Horizontal"))
         {
-            Hactivo = true;
-            
+            if (Vactivo == false)
+            {
+                Hactivo = true;
                 pasos.Play();
-            
-            
+            }
+          
         }
         if (Input.GetButtonDown("Vertical"))
         {
-            Vactivo = true;
-            pasos.Play();
+            if (Hactivo == false) {
+                Vactivo = true;
+                pasos.Play();
+            }
+           
         }
         if (Input.GetButtonUp("Horizontal"))
         {
             Hactivo = false;
-            if (Vactivo == false) { 
-            pasos.Pause();
+            if(Vactivo==false)
+            {
+                pasos.Stop();
+            }
+           
         }
-    }
         if (Input.GetButtonUp("Vertical"))
         {
-            Vactivo=false;
-            if(Hactivo== false)
+            Vactivo = false;
+            if(Hactivo==false)
             {
-                pasos.Pause();
+                pasos.Stop();
             }
-          
+            
         }
+       
     }
 }

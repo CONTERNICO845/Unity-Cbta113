@@ -45,10 +45,7 @@ public class MovimientoPersonaje : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && EstaEnPiso && (Time.time - tiempoUltimoSalto > tiempoRecargaSalto))
         {
-            if(sonidosalto != null && !sonidosalto.isPlaying)
-            {
-                sonidosalto.Play();
-            }
+
             velocidadAbajo.y = Mathf.Sqrt(saltos * -2 * gravedad);
             tiempoUltimoSalto = Time.time;
         }

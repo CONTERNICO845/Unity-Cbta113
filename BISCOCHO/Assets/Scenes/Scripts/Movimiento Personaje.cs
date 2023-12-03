@@ -14,6 +14,7 @@ public class MovimientoPersonaje : MonoBehaviour
     public AudioSource pasos;
     private bool Hactivo;
     private bool Vactivo;
+    private bool Sactivo;
     public AudioSource corrersound;
     public AudioSource sonidosalto;
     Vector3 velocidadAbajo;
@@ -35,6 +36,14 @@ public class MovimientoPersonaje : MonoBehaviour
         if (EstaEnPiso && velocidadAbajo.y <= 0)
         {
             velocidadAbajo.y = -2;
+            if (!pasos.isPlaying && (Input.GetButton("Horizontal") || Input.GetButton("Vertical")))
+            {
+                pasos.Play();
+            }
+        }
+        else
+        {
+            pasos.Stop();
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -45,9 +54,18 @@ public class MovimientoPersonaje : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && EstaEnPiso && (Time.time - tiempoUltimoSalto > tiempoRecargaSalto))
         {
-
+            Sactivo = true;
             velocidadAbajo.y = Mathf.Sqrt(saltos * -2 * gravedad);
             tiempoUltimoSalto = Time.time;
+            if(sonidosalto!=null)
+            {
+                sonidosalto.Play();
+                Debug.Log("Sonido de salto reproducido");
+            }
+            else
+            {
+                Debug.LogError("El AudioSource 'sonidosalto' no está asignado.");
+            }
         }
 
         velocidadAbajo.y += gravedad * Time.deltaTime;
@@ -65,7 +83,7 @@ public class MovimientoPersonaje : MonoBehaviour
             if (Vactivo == false)
             {
                 Hactivo = true;
-                pasos.Play();
+                pasos.Play();  
             }
           
         }
@@ -95,6 +113,17 @@ public class MovimientoPersonaje : MonoBehaviour
             }
             
         }
+        if(Input.GetButton("Horizontal")&& Input.GetButton("Jump"))
+        {
+            sonidosalto.Play();
+            pasos.Stop();
+        }
+        if (Input.GetButton("Vertical") && Input.GetButton("Jump"))
+        {
+            sonidosalto.Play();
+            pasos.Stop();
+        }
        
+
     }
 }

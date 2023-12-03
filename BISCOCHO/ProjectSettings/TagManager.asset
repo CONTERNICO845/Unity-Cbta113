@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Suelo
   - Objeto
+  - Aire
   layers:
   - Default
   - TransparentFX

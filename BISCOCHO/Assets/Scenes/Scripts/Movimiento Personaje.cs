@@ -103,21 +103,21 @@ public class MovimientoPersonaje : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider other)
+   private void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.CompareTag("Aire"))
     {
-        if (other.gameObject.CompareTag("Aire"))
-        {
-            ingresso = true;
-            pasos.Stop();
-        }
+        ingresso = true;
+        pasos.Stop();
     }
+}
 
-    private void OnTriggerExit(Collider other)
+private void OnTriggerExit(Collider other)
+{
+    if (other.gameObject.CompareTag("Aire"))
     {
-        if (other.gameObject.CompareTag("Aire"))
-        {
-            ingresso = false;
-            pasos.Play();
-        }
+        ingresso = false;
+        pasos.Play();
     }
+}
 }

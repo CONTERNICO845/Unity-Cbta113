@@ -95,6 +95,10 @@ public class MovimientoPersonaje : MonoBehaviour
             }
             
         }
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> parent of 73b76f5 (Notas, Sonido, Linterna, Contador)
     }
 }

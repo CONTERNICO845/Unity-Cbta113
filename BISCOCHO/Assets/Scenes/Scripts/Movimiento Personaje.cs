@@ -60,11 +60,6 @@ public class MovimientoPersonaje : MonoBehaviour
             if(sonidosalto!=null)
             {
                 sonidosalto.Play();
-                Debug.Log("Sonido de salto reproducido");
-            }
-            else
-            {
-                Debug.LogError("El AudioSource 'sonidosalto' no está asignado.");
             }
         }
 

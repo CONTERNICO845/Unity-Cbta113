@@ -21,7 +21,7 @@ public class MovimientoPersonaje : MonoBehaviour
     public float saltos = 2f;
     public float tiempoRecargaSalto = 1f;
     private float tiempoUltimoSalto;
-
+    public bool ingresso = false;
     void Start()
     {
         tiempoUltimoSalto = -tiempoRecargaSalto; // Inicializa el tiempo del último salto para permitir el primer salto
@@ -67,34 +67,57 @@ public class MovimientoPersonaje : MonoBehaviour
                 Hactivo = true;
                 pasos.Play();
             }
-          
+
         }
         if (Input.GetButtonDown("Vertical"))
         {
-            if (Hactivo == false) {
+            if (Hactivo == false)
+            {
                 Vactivo = true;
                 pasos.Play();
             }
-           
+
         }
         if (Input.GetButtonUp("Horizontal"))
         {
             Hactivo = false;
-            if(Vactivo==false)
+            if (Vactivo == false)
             {
                 pasos.Stop();
             }
-           
+
         }
         if (Input.GetButtonUp("Vertical"))
         {
             Vactivo = false;
-            if(Hactivo==false)
+            if (Hactivo == false)
             {
                 pasos.Stop();
             }
-            
+
         }
-       
+
+        if (ingresso == true)
+        {
+            pasos.Stop();
+        }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Aire"))
+        {
+            ingresso = true;
+            pasos.Stop();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Aire"))
+        {
+            ingresso = false;
+            pasos.Play();
+        }
     }
 }

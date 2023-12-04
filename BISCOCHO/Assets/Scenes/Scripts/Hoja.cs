@@ -16,6 +16,7 @@ public class Hoja : MonoBehaviour
     void Start()
     {
         PickUptext.SetActive(false);
+        
     }
 
     void Update()
@@ -32,11 +33,6 @@ public class Hoja : MonoBehaviour
                 Destroy(gameObject);
                 PickUptext.SetActive(false);
             }
-            //if(totalHojas >= 8) {
-
-                //ganar(); //Aqui se pondria la funcion para ganar al moneto de  juntar 8 hojass
-            
-            ///}
 
         }
 

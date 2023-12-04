@@ -7,7 +7,7 @@ public class MovimientoPersonaje : MonoBehaviour
     public float correr = 9f;
     public CharacterController controlador;
     public float velocidad = 6f;
-    public float gravedad = -20f;
+    private float gravedad = -60f;
     public Transform patas;
     public float DistanciaDelSuelo;
     public LayerMask MascaraDelPiso;
@@ -119,7 +119,7 @@ public class MovimientoPersonaje : MonoBehaviour
             pasos.Stop();
             sonidosalto.Play();
         }
-        if (Input.GetButton("Vertical") && Input.GetButtonUp("Jump"))
+        if (Input.GetButton("Vertical") && Input.GetKey(KeyCode.LeftShift))
         {
             pasos.Stop();
             sonidosalto.Play();

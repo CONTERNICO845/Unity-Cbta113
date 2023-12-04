@@ -35,7 +35,25 @@ public class MovimientoPersonaje : MonoBehaviour
         if (EstaEnPiso && velocidadAbajo.y <= 0)
         {
             velocidadAbajo.y = -2;
+            if (!pasos.isPlaying && (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))&&!Input.GetKey(KeyCode.LeftShift))
+            {
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    pasos.Stop();
+                    corrersound.Play();
+                }
+                else
+                {
+                    pasos.Play();
+                }
+                
+            }
         }
+        else
+        {
+            pasos.Stop();
+        
+    }
 
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
@@ -45,9 +63,10 @@ public class MovimientoPersonaje : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && EstaEnPiso && (Time.time - tiempoUltimoSalto > tiempoRecargaSalto))
         {
-
+            Debug.Log("Salto detectado");
             velocidadAbajo.y = Mathf.Sqrt(saltos * -2 * gravedad);
             tiempoUltimoSalto = Time.time;
+            sonidosalto.Play();
         }
 
         velocidadAbajo.y += gravedad * Time.deltaTime;
@@ -95,6 +114,17 @@ public class MovimientoPersonaje : MonoBehaviour
             }
             
         }
-       
+        if (Input.GetButton("Horizontal") && Input.GetButtonUp("Jump"))
+        {
+            pasos.Stop();
+            sonidosalto.Play();
+        }
+        if (Input.GetButton("Vertical") && Input.GetButtonUp("Jump"))
+        {
+            pasos.Stop();
+            sonidosalto.Play();
+        }
+      
+     
     }
 }

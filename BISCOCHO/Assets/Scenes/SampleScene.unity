@@ -442,7 +442,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.75, z: 0}
-  m_LocalScale: {x: 3.6414, y: 1, z: 5.3601}
+  m_LocalScale: {x: 3.6414, y: 1, z: 46.682182}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1411,8 +1411,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   pasos: {fileID: 1303385019}
-  corrersound: {fileID: 1303385019}
-  sonidosalto: {fileID: 1303385019}
+  corrersound: {fileID: 1303385020}
+  sonidosalto: {fileID: 1303385021}
   saltos: 2
   tiempoRecargaSalto: 0.7
 --- !u!114 &1303385017
@@ -1464,7 +1464,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8b01f64e5570df94db0c7af8c753726f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 44bfc549ff780e044b00940a1ca7faaa, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1472,11 +1472,11 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 70
+  Priority: 126
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: 0
+  Pan2D: -0
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
@@ -1656,19 +1656,19 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 71f589277d8218841b27fdcf093677e7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 526957a77e0242e418857e999a538eb2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 126
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: 0
+  Pan2D: -0
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
@@ -1717,7 +1717,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.57222223
       inSlope: 0
       outSlope: 0
       tangentMode: 0

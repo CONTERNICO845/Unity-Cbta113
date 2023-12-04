@@ -76,7 +76,9 @@ public class MovimientoPersonaje : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
 
+
             controlador.Move(move * correr * Time.deltaTime);
+
 
         }
         if (Input.GetButtonDown("Horizontal"))

@@ -2,24 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class Puntuaje : MonoBehaviour
 {
     public float puntos;
     private TextMeshProUGUI TextMesh;
-
+    public GameObject Ganar;
     private void Start()
     {
-        TextMesh = GetComponent<TextMeshProUGUI>();  
+        TextMesh = GetComponent<TextMeshProUGUI>();
+        Ganar.SetActive(false);
     }
     private void Update()
     {
-        float fraction = puntos / 8.0f;
-        TextMesh.text = $"{fraction:N0}/8";
+        TextMesh.text = puntos.ToString("0/8");
     }
 
     public void SumarPuntos(float PuntosEntrada )
     {
         puntos += PuntosEntrada;
+        if (puntos >= 3)
+        {
+            SceneManager.LoadScene("SampleScene");
+            Ganar.SetActive(true);
+        }
     }
+
+    
+            
 }

@@ -38,39 +38,50 @@ public class IAMOUSTRO2 : MonoBehaviour
             return;
         }
 
+        // Nuevo: Implementar rango de visión
         if (Vector3.Distance(transform.position, jugador.transform.position) > 30)
         {
-            ani.SetBool("Run", false);
-            // Incrementar el cronómetro en cada actualización
-            cronometro += Time.deltaTime;
+            // Calcular la dirección hacia el jugador
+            Vector3 directionToPlayer = (jugador.transform.position - transform.position).normalized;
 
-            if (cronometro >= 4)
+            // Calcular el ángulo entre la dirección actual del enemigo y la dirección al jugador
+            float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+
+            // Solo reaccionar si el jugador está dentro de un cierto ángulo de visión
+            if (angleToPlayer < 90f)
             {
-                // Reiniciar el cronómetro y seleccionar una nueva rutina
-                cronometro = 0;
-                rutina = Random.Range(0, 3);  // Cambiado de Random.Range(0, 2) a Random.Range(0, 3)
-            }
+                ani.SetBool("Run", false);
+                // Incrementar el cronómetro en cada actualización
+                cronometro += Time.deltaTime;
 
-            switch (rutina)
-            {
-                case 0:
-                    // Detenerse
-                    ani.SetBool("Walk", false);
-                    break;
+                if (cronometro >= 4)
+                {
+                    // Reiniciar el cronómetro y seleccionar una nueva rutina
+                    cronometro = 0;
+                    rutina = Random.Range(0, 3);  // Cambiado de Random.Range(0, 2) a Random.Range(0, 3)
+                }
 
-                case 1:
-                    // Rotar en una dirección aleatoria
-                    grado = Random.Range(0, 360);
-                    angulo = Quaternion.Euler(0, grado, 0);
-                    rutina++;
-                    break;
+                switch (rutina)
+                {
+                    case 0:
+                        // Detenerse
+                        ani.SetBool("Walk", false);
+                        break;
 
-                case 2:
-                    // Moverse en la dirección establecida
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, angulo, 0.5f);
-                    transform.Translate(Vector3.forward * 5 * Time.deltaTime);
-                    ani.SetBool("Walk", true);
-                    break;
+                    case 1:
+                        // Rotar en una dirección aleatoria
+                        grado = Random.Range(0, 360);
+                        angulo = Quaternion.Euler(0, grado, 0);
+                        rutina++;
+                        break;
+
+                    case 2:
+                        // Moverse en la dirección establecida
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, angulo, 0.5f);
+                        transform.Translate(Vector3.forward * 5 * Time.deltaTime);
+                        ani.SetBool("Walk", true);
+                        break;
+                }
             }
         }
         else
@@ -83,7 +94,10 @@ public class IAMOUSTRO2 : MonoBehaviour
 
                 ani.SetBool("Walk", false);
                 ani.SetBool("Run", true);
-                transform.Translate(Vector3.forward * 7 * Time.deltaTime);
+
+                // Usar una velocidad más baja al seguir al jugador
+                transform.Translate(Vector3.forward * 3 * Time.deltaTime);
+
                 ani.SetBool("Attack", false);
             }
             else

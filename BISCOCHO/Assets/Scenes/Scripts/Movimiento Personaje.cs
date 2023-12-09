@@ -7,7 +7,7 @@ public class MovimientoPersonaje : MonoBehaviour
     public float correr = 9f;
     public CharacterController controlador;
     public float velocidad = 6f;
-    private float gravedad = -60f;
+    public float gravedad = -20f;
     public Transform patas;
     public float DistanciaDelSuelo;
     public LayerMask MascaraDelPiso;
@@ -35,31 +35,23 @@ public class MovimientoPersonaje : MonoBehaviour
         if (EstaEnPiso && velocidadAbajo.y <= 0)
         {
             velocidadAbajo.y = -2;
-            if (!pasos.isPlaying && (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))&&!Input.GetKey(KeyCode.LeftShift))
-            {
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    pasos.Stop();
-                    corrersound.Play();
-                }
-                else
-                {
-                    pasos.Play();
-                }
-                
-            }
+            
+                manejarSonidoDeCorrer();
+           
+          
         }
         else
         {
-            pasos.Stop();
-        
-    }
+          DetenerSonidoPasos();
+
+        }
 
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * y;
         controlador.Move(move * velocidad * Time.deltaTime);
+       
 
         if (Input.GetButtonDown("Jump") && EstaEnPiso && (Time.time - tiempoUltimoSalto > tiempoRecargaSalto))
         {
@@ -67,7 +59,9 @@ public class MovimientoPersonaje : MonoBehaviour
             velocidadAbajo.y = Mathf.Sqrt(saltos * -2 * gravedad);
             tiempoUltimoSalto = Time.time;
             sonidosalto.Play();
+            manejarSonidoDeCorrer();
         }
+
 
         velocidadAbajo.y += gravedad * Time.deltaTime;
 
@@ -78,53 +72,102 @@ public class MovimientoPersonaje : MonoBehaviour
 
             controlador.Move(move * correr * Time.deltaTime);
 
+
         }
+        //Sonido de pasos
         if (Input.GetButtonDown("Horizontal"))
         {
             if (Vactivo == false)
             {
                 Hactivo = true;
                 pasos.Play();
+               
             }
-          
+
         }
         if (Input.GetButtonDown("Vertical"))
         {
-            if (Hactivo == false) {
+            if (Hactivo == false)
+            {
                 Vactivo = true;
                 pasos.Play();
+                
             }
-           
+
         }
+        //Desactivar sonido de pasos si el jugador esta quieto
         if (Input.GetButtonUp("Horizontal"))
         {
             Hactivo = false;
-            if(Vactivo==false)
+            if (Vactivo == false)
             {
                 pasos.Stop();
             }
-           
+
         }
         if (Input.GetButtonUp("Vertical"))
         {
             Vactivo = false;
-            if(Hactivo==false)
+            if (Hactivo == false)
             {
                 pasos.Stop();
             }
-            
+
         }
-        if (Input.GetButton("Horizontal") && Input.GetButtonUp("Jump"))
+        if (Input.GetButton("Horizontal") && Input.GetButtonDown("Jump"))
         {
             pasos.Stop();
             sonidosalto.Play();
+           
         }
-        if (Input.GetButton("Vertical") && Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetButton("Vertical") && Input.GetButtonDown("Jump"))
         {
             pasos.Stop();
             sonidosalto.Play();
+          
+          
         }
-      
-     
+        if (Input.GetButtonDown("Horizontal") && Input.GetKey(KeyCode.LeftShift))
+        {
+            pasos.Stop();
+            corrersound.Play();
+
+        }
+
+        if (Input.GetButtonDown("Vertical") && Input.GetKey(KeyCode.LeftShift))
+        {
+            pasos.Stop();
+            corrersound.Play();
+
+        }
+      if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            corrersound.Stop();
+        }
+
+
+
+    }
+    void manejarSonidoDeCorrer()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift)&&!corrersound.isPlaying)
+        {
+            Debug.Log("Comenzando a correr");
+            pasos.Stop();
+            corrersound.Play();
+
+        }
+        if (!pasos.isPlaying && (Input.GetButton("Horizontal") || Input.GetButton("Vertical")) && !Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("Reproduciendo sonido de pasos");
+            pasos.Play();
+            corrersound.Stop();
+        }
+    }
+    void DetenerSonidoPasos()
+    {
+        Debug.Log("Deteniendo sonidos de pasos");
+        pasos.Stop();
+       
     }
 }

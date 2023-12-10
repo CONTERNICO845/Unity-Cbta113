@@ -16,8 +16,6 @@ public class SonidosPersonaje : MonoBehaviour
     private float tiempoEsperaCaminar = 0.5f; // Medio segundo
     private float tiempoEsperaCorrer = 0.2f; // Un quinto de segundo
 
-    private bool saltoAudioReproducido;
-
     void Start()
     {
         // Agregar tres AudioSource al objeto
@@ -56,10 +54,9 @@ public class SonidosPersonaje : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Jump") && !saltoAudioReproducido)
+        if (Input.GetButtonDown("Jump"))
         {
             PlayAudio(saltoAudio);
-            saltoAudioReproducido = true;
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && (Input.GetButton("Vertical") || Input.GetButton("Horizontal")))
@@ -116,7 +113,6 @@ public class SonidosPersonaje : MonoBehaviour
         StopAudio(pasosAudio);
         StopAudio(saltoAudio);
         StopAudio(correrAudio);
-        saltoAudioReproducido = false; // Reiniciar el indicador de reproducción de salto
     }
 
     private void ConfigureAudioSource(AudioSource audioSource)

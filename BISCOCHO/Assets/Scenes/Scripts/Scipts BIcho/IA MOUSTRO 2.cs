@@ -80,7 +80,7 @@ public class IAMOUSTRO2 : MonoBehaviour
                     case 2:
                         // Moverse en la dirección establecida
                         transform.rotation = Quaternion.RotateTowards(transform.rotation, angulo, 0.5f);
-                        transform.Translate(Vector3.forward * 3 * Time.deltaTime);
+                        transform.Translate(Vector3.forward * 2 * Time.deltaTime);
                         ani.SetBool("Walk", true);
                         break;
                 }

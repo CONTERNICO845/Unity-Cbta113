@@ -5,8 +5,8 @@ using UnityEngine;
 public class MovimientoPersonaje : MonoBehaviour
 {
     public CharacterController controlador;
-    public float velocidadCaminar = 3f;
-    public float velocidadCorrer = 6f;
+    public float velocidadCaminar = 4f;
+    public float velocidadCorrer = 6.5f;
     public float gravedad = -9.8f;
     public Transform patas;
     public float distanciaDelSuelo;

@@ -41,7 +41,7 @@ public class IAMOUSTRO2 : MonoBehaviour
         }
 
         // Nuevo: Implementar rango de visión
-        if (Vector3.Distance(transform.position, jugador.transform.position) > 30)
+        if (Vector3.Distance(transform.position, jugador.transform.position) > 500)
         {
             // Calcular la dirección hacia el jugador
             Vector3 directionToPlayer = (jugador.transform.position - transform.position).normalized;

@@ -13,9 +13,6 @@ public class SonidosPersonaje : MonoBehaviour
     private bool estaCaminando;
     private bool estaCorriendo;
 
-    private float tiempoEsperaCaminar = 0.5f; // Medio segundo
-    private float tiempoEsperaCorrer = 0.2f; // Un quinto de segundo
-
     void Start()
     {
         // Agregar tres AudioSource al objeto
@@ -49,7 +46,7 @@ public class SonidosPersonaje : MonoBehaviour
         {
             if (estaCaminando)
             {
-                StopAudioWithDelay(pasosAudio, tiempoEsperaCaminar);
+                StopAudio(pasosAudio);
                 estaCaminando = false;
             }
         }
@@ -71,15 +68,9 @@ public class SonidosPersonaje : MonoBehaviour
         {
             if (estaCorriendo)
             {
-                StopAudioWithDelay(correrAudio, tiempoEsperaCorrer);
+                StopAudio(correrAudio);
                 estaCorriendo = false;
             }
-        }
-
-        // Detener todos los sonidos cuando no hay entrada de movimiento
-        if (!Input.anyKey)
-        {
-            StopAllAudio();
         }
     }
 
@@ -100,14 +91,6 @@ public class SonidosPersonaje : MonoBehaviour
         }
     }
 
-    private void StopAudioWithDelay(AudioSource audioSource, float delay)
-    {
-        if (audioSource.isPlaying)
-        {
-            Invoke(nameof(StopAudio), delay);
-        }
-    }
-
     private void StopAllAudio()
     {
         StopAudio(pasosAudio);
@@ -117,7 +100,7 @@ public class SonidosPersonaje : MonoBehaviour
 
     private void ConfigureAudioSource(AudioSource audioSource)
     {
-        audioSource.loop = true;
+        audioSource.loop = false; // Cambiado a false para que no repita automáticamente
         // Añadir cualquier otra configuración necesaria
     }
 }

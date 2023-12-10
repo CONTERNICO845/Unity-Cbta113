@@ -15,10 +15,12 @@ public class IAMOUSTRO2 : MonoBehaviour
     public float tiempoEsperaInicial = 0f;
     private bool esperaInicialCompleta = false;
 
+    public float rangoAtaque = 1.5f; // Nuevo: Establecer un rango de ataque
+
     void Start()
     {
         ani = GetComponent<Animator>();
-        jugador = GameObject.Find("jugador");
+        jugador = GameObject.Find("SeguimientoPLayer");
 
         // Nuevo: Iniciar temporizador de espera inicial
         Invoke("CompletarEsperaInicial", tiempoEsperaInicial);
@@ -78,7 +80,7 @@ public class IAMOUSTRO2 : MonoBehaviour
                     case 2:
                         // Moverse en la dirección establecida
                         transform.rotation = Quaternion.RotateTowards(transform.rotation, angulo, 0.5f);
-                        transform.Translate(Vector3.forward * 5 * Time.deltaTime);
+                        transform.Translate(Vector3.forward * 3 * Time.deltaTime);
                         ani.SetBool("Walk", true);
                         break;
                 }
@@ -86,7 +88,7 @@ public class IAMOUSTRO2 : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, jugador.transform.position) > 1 && !atacando)
+            if (Vector3.Distance(transform.position, jugador.transform.position) > rangoAtaque && !atacando)
             {
                 // Rotación suave hacia el jugador
                 var rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(jugador.transform.position - transform.position), 0.05f);
@@ -96,16 +98,24 @@ public class IAMOUSTRO2 : MonoBehaviour
                 ani.SetBool("Run", true);
 
                 // Usar una velocidad más baja al seguir al jugador
-                transform.Translate(Vector3.forward * 3 * Time.deltaTime);
+                transform.Translate(Vector3.forward * 5 * Time.deltaTime);
 
                 ani.SetBool("Attack", false);
+                atacando = false; // Importante restablecer atacando cuando el jugador está fuera del rango de ataque
             }
-            else
+            else if (Vector3.Distance(transform.position, jugador.transform.position) <= rangoAtaque)
             {
                 ani.SetBool("Walk", false);
                 ani.SetBool("Run", false);
                 ani.SetBool("Attack", true);
                 atacando = true;
+            }
+            else
+            {
+                ani.SetBool("Walk", false);
+                ani.SetBool("Run", true);
+                ani.SetBool("Attack", false);
+                atacando = false;
             }
         }
     }

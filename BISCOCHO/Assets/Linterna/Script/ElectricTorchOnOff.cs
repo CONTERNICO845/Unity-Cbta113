@@ -84,22 +84,28 @@ public class ElectricTorchOnOff : MonoBehaviour
 		}
 	}
 
-	void NoBatteryLight()
+    void NoBatteryLight()
     {
-		if (_flashLightOn)
-		{
-			GetComponent<Light>().intensity = intensityLight;
-			_emissionMaterialFade.OnEmission();
-		}
-		else
-		{
-			GetComponent<Light>().intensity = 0.0f;
-			_emissionMaterialFade.OffEmission();
-		}
-		InputKey();
-	}
+        if (_emissionMaterialFade == null)
+        {
+            Debug.LogError("EmissionMaterialGlassTorchFadeOut is not assigned!");
+            return;
+        }
 
-	void WithBatteryLight()
+        if (_flashLightOn)
+        {
+            GetComponent<Light>().intensity = intensityLight;
+            _emissionMaterialFade.OnEmission();
+        }
+        else
+        {
+            GetComponent<Light>().intensity = 0.0f;
+            _emissionMaterialFade.OffEmission();
+        }
+        InputKey();
+    }
+
+    void WithBatteryLight()
     {
 
 		if (_flashLightOn)

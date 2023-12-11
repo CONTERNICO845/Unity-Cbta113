@@ -25,7 +25,7 @@ public class Puntuaje : MonoBehaviour
         puntos += PuntosEntrada;
         if (puntos >= 3)
         {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("Tets");
             Ganar.SetActive(true);
         }
     }

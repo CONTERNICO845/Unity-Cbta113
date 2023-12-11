@@ -4,127 +4,48 @@ using UnityEngine;
 
 public class MovimientoPersonaje : MonoBehaviour
 {
-    public float correr = 9f;
     public CharacterController controlador;
-    public float velocidad = 6f;
-    private float gravedad = -60f;
+    public float velocidadCaminar = 4f;
+    public float velocidadCorrer = 6.5f;
+    public float gravedad = -9.8f;
     public Transform patas;
-    public float DistanciaDelSuelo;
-    public LayerMask MascaraDelPiso;
-    public AudioSource pasos;
-    private bool Hactivo;
-    private bool Vactivo;
-    public AudioSource corrersound;
-    public AudioSource sonidosalto;
+    public float distanciaDelSuelo;
+    public LayerMask mascaraDelPiso;
     Vector3 velocidadAbajo;
-    bool EstaEnPiso;
-    public float saltos = 2f;
+    bool estaEnPiso;
+    public float potenciaSalto = 8f;
     public float tiempoRecargaSalto = 1f;
     private float tiempoUltimoSalto;
 
     void Start()
     {
-        tiempoUltimoSalto = -tiempoRecargaSalto; // Inicializa el tiempo del último salto para permitir el primer salto
+        tiempoUltimoSalto = -tiempoRecargaSalto;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        EstaEnPiso = Physics.CheckSphere(patas.position, DistanciaDelSuelo, MascaraDelPiso);
+        estaEnPiso = Physics.CheckSphere(patas.position, distanciaDelSuelo, mascaraDelPiso);
 
-        if (EstaEnPiso && velocidadAbajo.y <= 0)
+        if (estaEnPiso && velocidadAbajo.y < 0)
         {
-            velocidadAbajo.y = -2;
-            if (!pasos.isPlaying && (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))&&!Input.GetKey(KeyCode.LeftShift))
-            {
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    pasos.Stop();
-                    corrersound.Play();
-                }
-                else
-                {
-                    pasos.Play();
-                }
-                
-            }
+            velocidadAbajo.y = -2f; // Asegurar un pequeño impulso al tocar el suelo
         }
-        else
-        {
-            pasos.Stop();
-        
-    }
 
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
-
         Vector3 move = transform.right * x + transform.forward * y;
-        controlador.Move(move * velocidad * Time.deltaTime);
+        float velocidadActual = Input.GetKey(KeyCode.LeftShift) ? velocidadCorrer : velocidadCaminar;
 
-        if (Input.GetButtonDown("Jump") && EstaEnPiso && (Time.time - tiempoUltimoSalto > tiempoRecargaSalto))
+        controlador.Move(move * velocidadActual * Time.deltaTime);
+
+        if (Input.GetButtonDown("Jump") && estaEnPiso && (Time.time - tiempoUltimoSalto > tiempoRecargaSalto))
         {
-            Debug.Log("Salto detectado");
-            velocidadAbajo.y = Mathf.Sqrt(saltos * -2 * gravedad);
+            velocidadAbajo.y = Mathf.Sqrt(potenciaSalto * -2 * gravedad);
             tiempoUltimoSalto = Time.time;
-            sonidosalto.Play();
         }
 
         velocidadAbajo.y += gravedad * Time.deltaTime;
 
-        controlador.Move(move * velocidad * Time.deltaTime + velocidadAbajo * Time.deltaTime);
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-
-            controlador.Move(move * correr * Time.deltaTime);
-
-        }
-        if (Input.GetButtonDown("Horizontal"))
-        {
-            if (Vactivo == false)
-            {
-                Hactivo = true;
-                pasos.Play();
-            }
-          
-        }
-        if (Input.GetButtonDown("Vertical"))
-        {
-            if (Hactivo == false) {
-                Vactivo = true;
-                pasos.Play();
-            }
-           
-        }
-        if (Input.GetButtonUp("Horizontal"))
-        {
-            Hactivo = false;
-            if(Vactivo==false)
-            {
-                pasos.Stop();
-            }
-           
-        }
-        if (Input.GetButtonUp("Vertical"))
-        {
-            Vactivo = false;
-            if(Hactivo==false)
-            {
-                pasos.Stop();
-            }
-            
-        }
-        if (Input.GetButton("Horizontal") && Input.GetButtonUp("Jump"))
-        {
-            pasos.Stop();
-            sonidosalto.Play();
-        }
-        if (Input.GetButton("Vertical") && Input.GetKey(KeyCode.LeftShift))
-        {
-            pasos.Stop();
-            sonidosalto.Play();
-        }
-      
-     
+        controlador.Move(velocidadAbajo * Time.deltaTime);
     }
 }

@@ -80,7 +80,7 @@ public class IAMOUSTRO2 : MonoBehaviour
                     case 2:
                         // Moverse en la dirección establecida
                         transform.rotation = Quaternion.RotateTowards(transform.rotation, angulo, 0.5f);
-                        transform.Translate(Vector3.forward * 2 * Time.deltaTime);
+                        transform.Translate(Vector3.forward * 4 * Time.deltaTime);
                         ani.SetBool("Walk", true);
                         break;
                 }
@@ -98,7 +98,7 @@ public class IAMOUSTRO2 : MonoBehaviour
                 ani.SetBool("Run", true);
 
                 // Usar una velocidad más baja al seguir al jugador
-                transform.Translate(Vector3.forward * 5 * Time.deltaTime);
+                transform.Translate(Vector3.forward * 6 * Time.deltaTime);
 
                 ani.SetBool("Attack", false);
                 atacando = false; // Importante restablecer atacando cuando el jugador está fuera del rango de ataque

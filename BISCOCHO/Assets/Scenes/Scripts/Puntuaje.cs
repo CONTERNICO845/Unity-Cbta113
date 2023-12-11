@@ -23,7 +23,7 @@ public class Puntuaje : MonoBehaviour
     public void SumarPuntos(float PuntosEntrada )
     {
         puntos += PuntosEntrada;
-        if (puntos >= 3)
+        if (puntos >= 8)
         {
             SceneManager.LoadScene("Tets");
             Ganar.SetActive(true);
